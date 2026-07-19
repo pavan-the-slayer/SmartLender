@@ -1,0 +1,28 @@
+{
+  "family": "smartlender-webapp",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/smartlenderWebappTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "webapp",
+      "image": "<dockerhub-user>/smartlender-webapp:latest",
+      "portMappings": [{ "containerPort": 5001, "protocol": "tcp" }],
+      "environment": [
+        { "name": "PREDICT_URL", "value": "http://<predict-api-external-ip>:5000/predict" },
+        { "name": "PREDICT_API_KEY", "value": "<same-key-as-predict-api-secret>" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/smartlender-webapp",
+          "awslogs-region": "<REGION>",
+          "awslogs-stream-prefix": "webapp"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartLender — Loan Application</title>
+<style>
+  :root {
+    --ink: #16241f;
+    --paper: #f6f3ea;
+    --ledger-line: #cdbfa0;
+    --brass: #9c7a3c;
+    --approve: #2f6d4f;
+    --reject: #9c3d2e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Iowan Old Style", "Georgia", "Times New Roman", serif;
+    display: flex;
+    justify-content: center;
+    padding: 48px 20px;
+  }
+
+  .ledger {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .ledger-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 3px double var(--ink);
+    padding-bottom: 14px;
+    margin-bottom: 6px;
+  }
+
+  .ledger-head h1 {
+    font-size: 28px;
+    letter-spacing: 0.02em;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .ledger-head .stamp {
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    color: var(--brass);
+    border: 1px solid var(--brass);
+    padding: 3px 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ledger-sub {
+    font-size: 13px;
+    color: #5a5346;
+    margin: 0 0 28px 0;
+    font-style: italic;
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .field {
+    border-bottom: 1px solid var(--ledger-line);
+    padding: 12px 0;
+  }
+
+  .field.full { grid-column: 1 / -1; }
+
+  .field label {
+    display: block;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6b6252;
+    margin-bottom: 6px;
+  }
+
+  .field input, .field select {
+    width: 90%;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    padding: 4px 0;
+    outline: none;
+  }
+
+  .field input:focus, .field select:focus {
+    border-bottom: 2px solid var(--brass);
+    margin-bottom: -2px;
+  }
+
+  .submit-row {
+    grid-column: 1 / -1;
+    margin-top: 28px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  button {
+    font-family: "Courier New", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  button:hover { background: #2b3d34; }
+  button:focus-visible { outline: 3px solid var(--brass); outline-offset: 2px; }
+
+  .verdict {
+    margin-top: 32px;
+    border: 2px solid var(--ink);
+    padding: 24px;
+    text-align: center;
+  }
+
+  .verdict.approved { border-color: var(--approve); }
+  .verdict.rejected { border-color: var(--reject); }
+
+  .verdict .status {
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .verdict.approved .status { color: var(--approve); }
+  .verdict.rejected .status { color: var(--reject); }
+
+  .verdict .prob {
+    margin-top: 8px;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    color: #5a5346;
+  }
+
+  .error-box {
+    margin-top: 24px;
+    border-left: 4px solid var(--reject);
+    background: #fbeceb;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--reject);
+  }
+
+  @media (max-width: 560px) {
+    form { grid-template-columns: 1fr; }
+    .field input, .field select { width: 100%; }
+  }
+</style>
+</head>
+<body>
+  <div class="ledger">
+    <div class="ledger-head">
+      <h1>SmartLender</h1>
+      <span class="stamp">Application Ledger</span>
+    </div>
+    <p class="ledger-sub">Enter the applicant's particulars below for an eligibility decision.</p>
+
+    <form method="POST" action="/form">
+      <div class="field">
+        <label for="Gender">Gender</label>
+        <select name="Gender" id="Gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="Married">Marital status</label>
+        <select name="Married" id="Married">
+          <option value="Yes">Married</option>
+          <option value="No">Unmarried</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="Dependents">Dependents</label>
+        <select name="Dependents" id="Dependents">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3+">3+</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="Education">Education</label>
+        <select name="Education" id="Education">
+          <option value="Graduate">Graduate</option>
+          <option value="Not Graduate">Not Graduate</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="Self_Employed">Self-employed</label>
+        <select name="Self_Employed" id="Self_Employed">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="Property_Area">Property area</label>
+        <select name="Property_Area" id="Property_Area">
+          <option value="Urban">Urban</option>
+          <option value="Semiurban">Semiurban</option>
+          <option value="Rural">Rural</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="ApplicantIncome">Applicant income (monthly)</label>
+        <input type="number" name="ApplicantIncome" id="ApplicantIncome" min="0" required>
+      </div>
+      <div class="field">
+        <label for="CoapplicantIncome">Co-applicant income (monthly)</label>
+        <input type="number" name="CoapplicantIncome" id="CoapplicantIncome" min="0" value="0">
+      </div>
+      <div class="field">
+        <label for="LoanAmount">Loan amount (in thousands)</label>
+        <input type="number" name="LoanAmount" id="LoanAmount" min="0" required>
+      </div>
+      <div class="field">
+        <label for="Loan_Amount_Term">Loan term (months)</label>
+        <input type="number" name="Loan_Amount_Term" id="Loan_Amount_Term" value="360">
+      </div>
+      <div class="field full">
+        <label for="Credit_History">Credit history meets guidelines</label>
+        <select name="Credit_History" id="Credit_History">
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit">Submit application</button>
+      </div>
+    </form>
+
+    {% if result %}
+      <div class="verdict {{ 'approved' if result.loan_status == 'Approved' else 'rejected' }}">
+        <div class="status">{{ result.loan_status }}</div>
+        {% if result.approval_probability is not none %}
+          <div class="prob">approval probability: {{ "%.1f"|format(result.approval_probability * 100) }}%</div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if error %}
+      <div class="error-box">{{ error }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>
