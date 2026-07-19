@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Lender</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Smart Lender</h1>
+    <h3>Applicant Credit-worthiness Prediction</h3>
+    <p>
+      Smart Lender uses a trained machine learning model to instantly predict
+      whether a loan application is likely to be approved, based on the
+      applicant's income, credit history, education, and other details.
+    </p>
+    <a class="btn" href="{{ url_for('predict') }}">Predict</a>
+  </div>
+</body>
+</html>

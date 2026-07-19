@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Lender - Result</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Prediction Result</h1>
+    <p class="result {{ status }}">{{ prediction_text }}</p>
+    <a class="btn" href="{{ url_for('predict') }}">Try Another</a>
+    <a class="btn secondary" href="{{ url_for('home') }}">Home</a>
+  </div>
+</body>
+</html>
